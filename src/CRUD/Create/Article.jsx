@@ -2,7 +2,7 @@ import { Button, ButtonGroup, FormControl, InputLabel, MenuItem, Select, TextFie
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
-export default function Article() {
+export default function CreateArticle() {
     const [categories, setCategories] = useState([
         {
             id: '',
@@ -24,8 +24,8 @@ export default function Article() {
         }
     ]);
     useEffect(() => {
-        axios.get('https://sheetdb.io/api/v1/yzelvmaoczxfc').then(data => setCategories(data.data))
-        axios.get('https://sheetdb.io/api/v1/z8vf9v7ndynps').then(data => setArticles(data.data))
+        axios.get('https://sheetdb.io/api/v1/5otjx4kyw1e1y').then(data => setCategories(data.data))
+        axios.get('https://sheetdb.io/api/v1/znf87zwkiuisa').then(data => setArticles(data.data))
     }, [])
     const idArticle = articles.length + 1;
     const handleSubmit = (e) => {
@@ -56,10 +56,10 @@ export default function Article() {
         }, 4000);
     };
     return (
-        <div className="w-full flex justify-end py-2">
+        <div className="w-full flex justify-end py-5">
             <div className='w-5/6 flex justify-center'>
                 <form onSubmit={handleSubmit} className="flex flex-col justify-center w-full gap-6">
-                    <TextField variant="outlined" name="id" label='id' fullWidth disabled value={idArticle} />
+                    <TextField variant="outlined" name="id" label='id' fullWidth disabled={true} value={idArticle} />
                     <TextField label="Id Content" variant="outlined" name="idContent" fullWidth type="number" />
                     <TextField label="Name" variant="outlined" name="nameArticle" fullWidth />
                     <TextField label="Image" variant="outlined" name="imgArticle" fullWidth />

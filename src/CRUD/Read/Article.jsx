@@ -19,6 +19,7 @@ import {
     DialogContentText,
     DialogTitle,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const defaultImage =
     "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg";
@@ -34,10 +35,10 @@ const Table = () => {
     const [articles, setArticles] = useState([]);
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedArticle, setSelectedArticle] = useState(null);
-
+    const navigate = useNavigate()
     useEffect(() => {
         axios
-            .get("https://sheetdb.io/api/v1/z8vf9v7ndynps")
+            .get("https://sheetdb.io/api/v1/znf87zwkiuisa")
             .then((res) => setArticles(res.data))
             .catch((err) => console.error(err));
     }, []);
@@ -54,7 +55,7 @@ const Table = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`https://sheetdb.io/api/v1/z8vf9v7ndynps/id/${id}`);
+            await axios.delete(`https://sheetdb.io/api/v1/znf87zwkiuisa/id/${id}`);
             setArticles(articles.filter(a => a.id !== id));
             setSelectedArticle(null);
         }
@@ -125,7 +126,7 @@ const Table = () => {
                                 </TableCell>
                                 <TableCell>
                                     <Box display="flex" gap={1}>
-                                        <Button variant="outlined" color="primary">
+                                        <Button variant="outlined" color="primary" onClick={() => navigate(`/article/${article.id}`)}>
                                             Update
                                         </Button>
                                         <Button
@@ -175,11 +176,11 @@ export const TableArticle = () => (
     <div className="w-full flex justify-end ">
         <div className="w-5/6 flex justify-center">
             <div className="w-full ">
-                    <NameTable
-                        name="Article Table"
-                        description="Description for article table"
-                    />
-                    <Table />
+                <NameTable
+                    name="Article Table"
+                    description="Description for article table"
+                />
+                <Table />
             </div>
         </div >
     </div>

@@ -17,16 +17,21 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-
-const defaultImage = "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg";
+import { useNavigate } from "react-router-dom";
 const Table = () => {
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([
+    {
+      id: '',
+      name: '',
+      href: ''
+    }
+  ]);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
-
+  const navigate = useNavigate()
   useEffect(() => {
     axios
-      .get("https://sheetdb.io/api/v1/yzelvmaoczxfc")
+      .get("https://sheetdb.io/api/v1/5otjx4kyw1e1y")
       .then((res) => setCategories(res.data))
       .catch((err) => console.error(err));
   }, []);
@@ -43,7 +48,7 @@ const Table = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://sheetdb.io/api/v1/yzelvmaoczxfc/id/${id}`);
+      await axios.delete(`https://sheetdb.io/api/v1/znf87zwkiuisa/id/${id}`);
       setCategories(categories.filter(a => a.id !== id));
       setSelectedCategory(null);
     }
@@ -66,6 +71,7 @@ const Table = () => {
                 "ID",
                 "Name",
                 "Href",
+                "Actions",
               ].map((title) => (
                 <TableCell
                   key={title}
@@ -90,7 +96,7 @@ const Table = () => {
                 <TableCell>{category.href}</TableCell>
                 <TableCell>
                   <Box display="flex" gap={1}>
-                    <Button variant="outlined" color="primary">Update</Button>
+                    <Button variant="outlined" color="primary" onClick={() => navigate(`/category/${category.id}`)}>Update</Button >
                     <Button variant="outlined" color="error" onClick={() => handleOpenDialog(category)}>Delete</Button>
                   </Box>
                 </TableCell>

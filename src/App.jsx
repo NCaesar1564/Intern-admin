@@ -9,8 +9,8 @@ import ListCategory from './CRUD/Read/Category'
 import AddArticle from "./CRUD/Create/Article"
 import AddCategory from './CRUD/Create/Category'
 //UPDATE
-import UpdateArticle from './CRUD/update/UpdateArticle'
-import UpdateCategory from './CRUD/update/UpdateCategory'
+import UpdateArticle from './CRUD/Update/Article'
+import UpdateCategory from './CRUD/Update/Category'
 
 
 //AUTH
@@ -28,14 +28,14 @@ function App() {
         {/* Home */}
         <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>}></Route>
         {/* LIST */}
-        <Route path="/article" element={<ListArticle />}></Route>
-        <Route path="/category" element={<ListCategory />}></Route>
+        <Route path="/article" element={<PrivateRoute><ListArticle /></PrivateRoute>}></Route>
+        <Route path="/category" element={<PrivateRoute><ListCategory /></PrivateRoute>}></Route>
         {/* ADD */}
-        <Route path="/add/article" element={<AddArticle />}></Route>
-        <Route path="/add/category" element={<AddCategory />}></Route>
+        <Route path="/add/article" element={<PrivateRoute><AddArticle /></PrivateRoute>}></Route>
+        <Route path="/add/category" element={<PrivateRoute><AddCategory /></PrivateRoute>}></Route>
         {/* UPDATE */}
-        <Route path="/category/:id" element={<UpdateCategory />}></Route>
-        <Route path="/article/:id" element={<UpdateArticle />}></Route>
+        <Route path="/category/:id" element={<PrivateRoute><UpdateCategory /></PrivateRoute>}></Route>
+        <Route path="/article/:id" element={<PrivateRoute><UpdateArticle /></PrivateRoute>}></Route>
       </Routes>
     </div>
   )

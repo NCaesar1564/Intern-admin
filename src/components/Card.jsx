@@ -13,18 +13,20 @@ export const DashboardItem = ({ name, href, icon, color }) => {
     return (
         <Card sx={{ minWidth: 275, background: `${color}`, backdropFilter: 'blur(8px)' }} >
             <CardContent>
-                <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
-                    {icon}
-                </Typography>
-                <Typography variant="body2">
-                    {name}
-                </Typography>
+                <div className='flex justify-start items-center gap-2'>
+                    <Typography>
+                        {icon}
+                    </Typography>
+                    <Typography variant="body2" >
+                        <p className='font-black text-xl'>{name}</p>
+                    </Typography>
+                </div>
             </CardContent>
             <CardActions>
                 <Button size="small" onClick={() => navigate(`/${href}`)} sx={{
                     color: 'black',
                     background: 'white',
-                    '&:hover': {opacity: 0.8}
+                    '&:hover': { opacity: 0.8 }
                 }}>GO</Button>
             </CardActions>
         </Card>
@@ -35,20 +37,20 @@ export default function ListCard() {
         id: 1,
         name: 'DANH MỤC',
         href: 'category',
-        icon: <BiSolidCategory />,
+        icon: <BiSolidCategory size={20} />,
         color: 'red',
     }, {
         id: 2,
         name: 'BÀI BÁO',
         href: 'article',
-        icon: <GrArticle />,
+        icon: <GrArticle size={20} />,
         color: 'blue',
     }];
     return (
         <div className='w-full grid grid-cols-4 gap-5'>
             {managerList.map((elem) => (
                 <div key={elem.id}>
-                    <DashboardItem name={elem.name} href={elem.href} color={elem.color} />
+                    <DashboardItem name={elem.name} href={elem.href} color={elem.color} icon={elem.icon} />
                 </div>
             ))}
         </div>

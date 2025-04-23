@@ -1,3 +1,4 @@
+import { TextField, Button } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -20,38 +21,25 @@ export default function LoginPage() {
         e.preventDefault()
         if (email.toString() === aAccount.aaccount && password.toString() === aAccount.apass) {
             localStorage.setItem("isLoggedIn", "true")
-            setMessage("ok")
             setTimeout(() => {
                 navigate('/')
-            }, 4000);
+            }, 1000);
         } else {
             setMessage('account or password is wrong')
             setPassword("")
         }
     }
     return (
-        <div className='flex justify-center items-center h-screen'>
-            <form className='border border-black w-1/2 h-2/3 flex flex-col items-center justify-center' onSubmit={onSubmit}>
-                <h1 className='text-3xl  font-bold'>Login</h1>
-                <div className='flex flex-col gap-5 w-full items-center'>
-                    <fieldset className='border w-2/3 h-16 flex justify-center '>
-                        <legend className='ml-2'>Email</legend>
-                        <input type="text"
-                            className='outline-none w-[98%] h-fit'
-                            required name='email'
-                            onChange={(e) => setEmail(e.target.value)} />
-                    </fieldset>
-                    <fieldset className='border w-2/3 h-16 flex justify-center items-center'>
-                        <legend className='ml-2'>Password</legend>
-                        <input type="password"
-                            className='outline-none w-[98%] h-fit'
-                            required name='password'
-                            onChange={(e) => setPassword(e.target.value)} />
-                    </fieldset>
-                    <button className='border border-black w-2/3 h-12 bg-green-500 hover:opacity-80 cursor-pointer'>Login</button>
-                    <p className={`w-full text-center mt-5 `}>{message}</p>
-                </div>
-            </form>
-        </div>
+        <div className='flex justify-center items-center absolute top-0 left-0 h-screen w-full border bg-white'>
+            <div className='w-3/4 h-3/4 border flex justify-center items-center'>
+                <form onSubmit={onSubmit} className='flex flex-col justify-center items-center gap-5 w-3/4'>
+                    <h1 className='font-black text-3xl'>Login</h1>
+                    <div className='text-red-500'>{message}</div>
+                    <TextField variant="outlined" fullWidth onChange={(e) => setEmail(e.target.value)} />
+                    <TextField variant="outlined" fullWidth onChange={(e) => setPassword(e.target.value)} />
+                    <Button variant='outlined' fullWidth sx={{ background: 'blue', color: 'black', ":hover": { opacity: 0.6 } }} type='submit'>Login</Button>
+                </form>
+            </div>
+        </div >
     )
 }

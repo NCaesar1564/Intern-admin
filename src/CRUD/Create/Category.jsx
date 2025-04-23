@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button, ButtonGroup, TextField } from '@mui/material';
 
-export default function AddCategory() {
-  const url = 'https://sheetdb.io/api/v1/yzelvmaoczxfc'
+export default function CreateCategory() {
+  const url = 'https://sheetdb.io/api/v1/5otjx4kyw1e1y'
   const [categories, setCategories] = useState([{
     id: '', name: '', href: ''
   }]);
