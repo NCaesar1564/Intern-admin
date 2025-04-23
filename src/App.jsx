@@ -1,13 +1,13 @@
 import { Route, Routes } from "react-router-dom"
 //Header  + Home
 import Home from './Home'
-import Header from "./components/Header"
+import Layout from "./components/Layout"
 //LIST
-import ListArticle from './CRUD/list/ListArticle'
-import ListCategory from './CRUD/list/ListCategory'
+import ListArticle from './CRUD/Read/Article'
+import ListCategory from './CRUD/Read/Category'
 //ADD
-import AddArticle from "./CRUD/add/AddArticle"
-import AddCategory from './CRUD/add/AddCategory'
+import AddArticle from "./CRUD/Create/Article"
+import AddCategory from './CRUD/Create/Category'
 //UPDATE
 import UpdateArticle from './CRUD/update/UpdateArticle'
 import UpdateCategory from './CRUD/update/UpdateCategory'
@@ -19,8 +19,8 @@ import PrivateRoute from './auth/PrivateRoute'
 
 function App() {
   return (
-    <>
-      <Header />
+    <div className="overflow-hidden">
+      <Layout />
       <Routes>
         {/* Auth */}
         <Route path="/login" element={<Login />}></Route>
@@ -36,10 +36,8 @@ function App() {
         {/* UPDATE */}
         <Route path="/category/:id" element={<UpdateCategory />}></Route>
         <Route path="/article/:id" element={<UpdateArticle />}></Route>
-
-
       </Routes>
-    </>
+    </div>
   )
 }
 

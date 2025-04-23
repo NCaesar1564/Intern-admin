@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { Button, ButtonGroup, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 
 export default function AddCategory() {
-  const url = 'https://sheetdb.io/api/v1/n6vtnrc2m0zh9'
+  const url = 'https://sheetdb.io/api/v1/yzelvmaoczxfc'
   const [categories, setCategories] = useState([{
     id: '', name: '', href: ''
   }]);
@@ -13,8 +14,6 @@ export default function AddCategory() {
       .catch(err => console.error(err))
   }, []);
   const idCat = categories.length + 1
-  console.log(categories)
-  console.log(categories.length)
   const handleSubmit = (e) => {
     e.preventDefault();
     const url = 'https://script.google.com/macros/s/AKfycbz6eWvgBVaMxqk7RTw_BKIidS5ThOgLMw2VfueHC3wLa3uiS_8VfuIlEe0l1GjRQapaCA/exec';
@@ -36,27 +35,15 @@ export default function AddCategory() {
     }, 4000);
   }
   return (
-    <div className=' mt-20 flex justify-center'>
+    <div className='flex justify-center py-5'>
       <form onSubmit={handleSubmit} className='flex flex-col w-1/2 gap-5'>
-        <input type="number"
-          name='id'
-          className='border rounded-md h-12 w-full px-2  opacity-50'
-          placeholder='id'
-          value={idCat}
-          disabled
-        />
-        <input placeholder="Tên danh mục"
-          name='name'
-          className='border rounded-md h-12 w-full px-2'
-        />
-        <input placeholder="Href"
-          name='href'
-          className='border rounded-md h-12 w-full px-2'
-        />
-        <div className='w-full h-12'>
-          <button type="submit" className='cursor-pointer border bg-green-500 w-1/2 h-full hover:opacity-80'>Thêm danh mục</button>
-          <button type="reset" className='cursor-pointer border bg-red-400 w-1/2 h-full hover:opacity-80'>Clear</button>
-        </div>
+        <TextField variant="outlined" name="id" label='id' fullWidth disabled value={idCat} />
+        <TextField label="Name" variant="outlined" name="name" fullWidth type="number" />
+        <TextField label="Href" variant="outlined" name="href" fullWidth />
+        <ButtonGroup variant="contained" aria-label="Basic button group">
+          <Button variant="contained" fullWidth type="submit">Add</Button>
+          <Button variant="contained" fullWidth type="reset" color="error" >Clear</Button>
+        </ButtonGroup>
       </form>
     </div>
   );

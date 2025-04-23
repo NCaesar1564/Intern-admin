@@ -73,7 +73,7 @@ export default function ListArticle() {
   //xac nhan xoa
   const ConfirmDelete = async (id) => {
     try {
-      await axios.delete(`https://sheetdb.io/api/v1/718rcrpirn0aq/id/${id}`);
+      await axios.delete(`https://sheetdb.io/api/v1/yzelvmaoczxfc/id/${id}`);
       setArticles(articles.filter(a => a.id !== id));
       setDialog(false);
       setSelected(null);
@@ -91,7 +91,7 @@ export default function ListArticle() {
   const TopArticle = ArticleFiltered.slice(0, maxlength)
 
   return (
-    <div className='flex flex-col justify-center items-center mt-20 w-full'>
+    <div className='flex flex-col justify-center items-center w-full'>
       <div className='absolute top-3 right-0 z-50 w-1/2'>
         <SearchBarButton setSearchKey={setSearchKey} searchKey={searchKey} searchBar={searchBar} HandleSearchBar={HandleSearchBar} />
       </div>

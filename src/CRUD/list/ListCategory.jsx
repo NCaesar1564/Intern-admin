@@ -79,7 +79,7 @@ export default function ListCategory() {
 
 
   return (
-    <div className='w-full flex flex-col items-center justify-end mt-20 gap-5'>
+    <div className='w-full flex flex-col items-center justify-end gap-5'>
       <div className='absolute top-3 right-0 z-50 w-1/2'>
         <SearchBarButton setSearchKey={setSearchKey} searchKey={searchKey} searchBar={searchBar} HandleSearchBar={HandleSearchBar} />
       </div>

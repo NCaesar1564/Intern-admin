@@ -1,24 +1,29 @@
 import React from 'react'
 import { BiSolidCategory } from 'react-icons/bi'
 import { GrArticle } from 'react-icons/gr'
-import { RiHashtag } from 'react-icons/ri'
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
 
-export const CardManager = ({ name, icon }) => {
+export const DashboardItem = ({ name, href, icon }) => {
+    const navigate = useNavigate()
     return (
-        <>
-            <p className='border border-black rounded-lg px-10 py-5 flex justify-center items-center gap-1'>
-                {icon} Quản lý {name}
-            </p>
-        </>
-    )
-}
-export const CardAdd = ({ name, icon }) => {
-    return (
-        <>
-            <p className='border border-black rounded-lg px-10 py-5 flex justify-center items-center gap-1'>
-                {icon} Thêm {name}
-            </p>
-        </>
+        <Card sx={{ minWidth: 275 }}>
+            <CardContent>
+                <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
+                    {icon}
+                </Typography>
+                <Typography variant="body2">
+                    {name}
+                </Typography>
+            </CardContent>
+            <CardActions>
+                <Button size="small" onClick={() => navigate(`/${href}`)}>GO</Button>
+            </CardActions>
+        </Card>
     )
 }
 export default function ListCard() {
@@ -33,35 +38,13 @@ export default function ListCard() {
         href: 'article',
         icon: <GrArticle />
     }];
-
     return (
-        <div className='w-full flex justify-center'>
-            <div className='w-2/3 flex justify-start gap-10 mt-20'>
-                <div className='flex flex-col gap-y-5'>
-                    <div className='flex w-full'>
-                        <div className='flex flex-col gap-y-5'>
-                            {managerList.map((list) => (
-                                <a key={list.id} href={list.href} >
-                                    <CardManager name={list.name} icon={list.icon} />
-                                </a>
-                            ))}
-                        </div>
-                    </div>
+        <div className='grid grid-cols-4'>
+            {managerList.map((elem) => (
+                <div key={elem.id}>
+                    <DashboardItem name={elem.name} href={elem.href} />
                 </div>
-                <div className='flex flex-col gap-y-5'>
-                    <div className='flex w-full'>
-                        <div className='flex flex-col gap-y-5'>
-                            {managerList.map((list) => (
-                                <a key={list.id} href={`/add/${list.href}`} >
-                                    <CardAdd name={list.name} icon={list.icon} />
-                                </a>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
+            ))}
         </div>
     )
 }
