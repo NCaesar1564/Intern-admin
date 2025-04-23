@@ -30,7 +30,7 @@ export const Card = () => {
 export default function Sidebar() {
     return (
         <>
-            <div className='w-full h-lvh z-50 bg-white'>
+            <div className='w-full min-h-screen z-50 bg-white'>
                 <Name />
                 <div className='w-full flex flex-col justify-center items-center  z-50'>
                     <Card />

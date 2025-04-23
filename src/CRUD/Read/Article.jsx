@@ -1,90 +1,188 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import {useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import {
+    Box,
+    Paper,
+    Avatar,
+    Typography,
+    Table as MuiTable,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Tooltip,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+} from "@mui/material";
 
-export const NameTable = ({ name, description }) => {
-    return (
-        <>
-            <div className='flex flex-col m-4'>
-                <h1 className='text-2xl'>{name}</h1>
-                <p className='text-gray-300'>{description}</p>
-            </div>
-        </>
-    )
-}
-export const Table = () => {
-    const url = 'https://sheetdb.io/api/v1/z8vf9v7ndynps';
-    const defaultIamge = 'https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg';
-    const [articles, setArticles] = useState([{
-        id: '',
-        idContent: '',
-        nameArticle: '',
-        description: '',
-        imgArticle: '',
-        hashtags: '',
-        category: '',
-        author: '',
-        content: ''
-    }]);
+const defaultImage =
+    "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg";
+
+const formatAuthor = (name) => {
+    return name
+        ?.split(" ")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(" ");
+};
+
+const Table = () => {
+    const [articles, setArticles] = useState([]);
+    const [openDialog, setOpenDialog] = useState(false);
+    const [selectedArticle, setSelectedArticle] = useState(null);
+
     useEffect(() => {
-        axios.get(url)
-            .then(data => setArticles(data.data))
-            .catch(err => console.error(err))
-    }, [])
-    return (
-        <>
-            <table border={1} className=''>
-                <thead className='w-full'>
-                    <tr>
-                        <th className='w-fit text-sm'>Id</th>
-                        <th className='w-fit text-sm'>Id Content</th>
-                        <th className='w-fit text-sm'>Name</th>
-                        <th className='w-fit text-sm'>Description</th>
-                        <th className='w-fit text-sm'>Image</th>
-                        <th className='w-fit text-sm'>Href</th>
-                        <th className='w-fit text-sm'>Category</th>
-                        <th className='w-fit text-sm'>Author</th>
-                        <th className='w-fit'>content</th>
-                    </tr>
-                </thead>
-                <tbody className='w-full '>
-                    {articles.map((article) => (
-                        <tr className={`${article.id % 2 === 0 ? `bg-yellow-100` : ``}`} key={article.id}>
-                            <th className='w-[2%] text-xs'>{article.id}</th>
-                            <th className='w-[5%] text-xs'>{article.idContent}</th>
-                            <th className='w-fit text-xs'>{article.nameArticle}</th>
-                            <th className='w-fit text-xs'>{article.description}</th>
-                            <th className='w-full flex justify-center items-center'><img src={article.imgArticle || defaultIamge} alt={article.nameArticle} className='w-3/4 h-3/4'/></th>
-                            <th className='w-fit text-xs'>{article.hashtags}</th>
-                            <th className='w-fit text-xs'>{article.category}</th>
-                            <th className='w-fit text-xs'>{article.author}</th>
-                            <th className='w-fit'></th>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </>
-    )
-}
-export const TableArticle = () => {
-    return (
-        <>
-            <div className='w-5/6 h-11/12 flex justify-start items-start'>
-                <div className='h-2/3 w-11/12 border ml-8 max-h-2/3 overflow-auto border-gray-50 bg-gray-50 rounded-md'>
-                    <NameTable name='Article Table' description='description for article table' />
-                    <Table />
-                </div>
-            </div>
-        </>
-    )
-}
-export default function Article() {
-    const navigate = useNavigate()
+        axios
+            .get("https://sheetdb.io/api/v1/z8vf9v7ndynps")
+            .then((res) => setArticles(res.data))
+            .catch((err) => console.error(err));
+    }, []);
 
-    const [selected, setSelected] = useState(null);
+    const handleOpenDialog = (article) => {
+        setSelectedArticle(article);
+        setOpenDialog(true);
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+        setSelectedArticle(null);
+    };
+
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete(`https://sheetdb.io/api/v1/z8vf9v7ndynps/id/${id}`);
+            setArticles(articles.filter(a => a.id !== id));
+            setSelectedArticle(null);
+        }
+        catch (err) {
+            console.error(err)
+        }
+        handleCloseDialog();
+    };
+
     return (
-        <div className='w-full h-screen flex justify-end items-center bg-gray-200'>
-            <TableArticle />
-        </div>
-    )
-}
+        <>
+            <TableContainer
+                component={Paper}
+                sx={{ maxHeight: 700, width: "100%" }}
+            >
+                <MuiTable stickyHeader>
+                    <TableHead>
+                        <TableRow sx={{ backgroundColor: "#1976d2" }}>
+                            {[
+                                "ID Content",
+                                "Name",
+                                "Description",
+                                "Image",
+                                "Hashtags",
+                                "Category",
+                                "Author",
+                                "Content",
+                                "Actions",
+                            ].map((title) => (
+                                <TableCell
+                                    key={title}
+                                    sx={{ color: "black", fontWeight: "bold" }}
+                                >
+                                    {title}
+                                </TableCell>
+                            ))}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {articles.map((article, index) => (
+                            <TableRow
+                                key={article.id}
+                                sx={{
+                                    backgroundColor: index % 2 === 0 ? "#fff" : "#fffde7",
+                                    "&:hover": { backgroundColor: "#f1f1f1" },
+                                }}
+                            >
+                                <TableCell>{article.idContent}</TableCell>
+                                <TableCell>{article.nameArticle}</TableCell>
+                                <TableCell>{article.description}</TableCell>
+                                <TableCell>
+                                    <Box display="flex" justifyContent="center">
+                                        <Avatar
+                                            variant="rounded"
+                                            src={article.imgArticle || defaultImage}
+                                            alt="img"
+                                            sx={{ width: 60, height: 60 }}
+                                        />
+                                    </Box>
+                                </TableCell>
+                                <TableCell>{article.hashtags}</TableCell>
+                                <TableCell>{article.category}</TableCell>
+                                <TableCell>{formatAuthor(article.author)}</TableCell>
+                                <TableCell sx={{ maxWidth: 200 }}>
+                                    <Tooltip title={article.content || ""}>
+                                        <Typography noWrap>{article.content}</Typography>
+                                    </Tooltip>
+                                </TableCell>
+                                <TableCell>
+                                    <Box display="flex" gap={1}>
+                                        <Button variant="outlined" color="primary">
+                                            Update
+                                        </Button>
+                                        <Button
+                                            variant="outlined"
+                                            color="error"
+                                            onClick={() => handleOpenDialog(article)}
+                                        >
+                                            Delete
+                                        </Button>
+                                    </Box>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </MuiTable>
+            </TableContainer>
+            <Dialog open={openDialog} onClose={handleCloseDialog}>
+                <DialogTitle>Xác nhận xóa</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Bạn có chắc chắn muốn xóa bài viết:{" "}
+                        <strong>{selectedArticle?.nameArticle}</strong>?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDialog}>Hủy</Button>
+                    <Button onClick={() => handleDelete(selectedArticle?.id)} color="error">
+                        Xóa
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </>
+    );
+};
+
+const NameTable = ({ name, description }) => (
+    <Box sx={{ px: 2, pt: 2 }}>
+        <Typography variant="h5" fontWeight="bold">
+            {name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+            {description}
+        </Typography>
+    </Box>
+);
+export const TableArticle = () => (
+    <div className="w-full flex justify-end ">
+        <div className="w-5/6 flex justify-center">
+            <div className="w-full ">
+                    <NameTable
+                        name="Article Table"
+                        description="Description for article table"
+                    />
+                    <Table />
+            </div>
+        </div >
+    </div>
+);
+
+export default TableArticle;

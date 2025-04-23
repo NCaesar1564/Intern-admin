@@ -142,7 +142,7 @@ export default function ListArticle() {
         </div>
       </div>
       <div className='fixed top-1/3 left-1/4 z-50 w-full'>
-        {dialog && <Dialog name={selected?.nameArticle} ConfirmDelete={() => ConfirmDelete(selected?.id)} CancelDelete={CancelDelete} />}
+        {dialog && <Dialog name={selected?.nameArticle} ConfirmDelete={ConfirmDelete(id)} CancelDelete={CancelDelete} />}
       </div>
       {dialog ?
         (

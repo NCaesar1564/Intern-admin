@@ -8,10 +8,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 
-export const DashboardItem = ({ name, href, icon }) => {
+export const DashboardItem = ({ name, href, icon, color }) => {
     const navigate = useNavigate()
     return (
-        <Card sx={{ minWidth: 275 }}>
+        <Card sx={{ minWidth: 275, background: `${color}`, backdropFilter: 'blur(8px)' }} >
             <CardContent>
                 <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
                     {icon}
@@ -21,7 +21,11 @@ export const DashboardItem = ({ name, href, icon }) => {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small" onClick={() => navigate(`/${href}`)}>GO</Button>
+                <Button size="small" onClick={() => navigate(`/${href}`)} sx={{
+                    color: 'black',
+                    background: 'white',
+                    '&:hover': {opacity: 0.8}
+                }}>GO</Button>
             </CardActions>
         </Card>
     )
@@ -29,20 +33,22 @@ export const DashboardItem = ({ name, href, icon }) => {
 export default function ListCard() {
     const managerList = [{
         id: 1,
-        name: 'Danh mục',
+        name: 'DANH MỤC',
         href: 'category',
-        icon: <BiSolidCategory />
+        icon: <BiSolidCategory />,
+        color: 'red',
     }, {
         id: 2,
-        name: 'Bài báo',
+        name: 'BÀI BÁO',
         href: 'article',
-        icon: <GrArticle />
+        icon: <GrArticle />,
+        color: 'blue',
     }];
     return (
-        <div className='grid grid-cols-4'>
+        <div className='w-full grid grid-cols-4 gap-5'>
             {managerList.map((elem) => (
                 <div key={elem.id}>
-                    <DashboardItem name={elem.name} href={elem.href} />
+                    <DashboardItem name={elem.name} href={elem.href} color={elem.color} />
                 </div>
             ))}
         </div>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Button, ButtonGroup, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Button, ButtonGroup, TextField } from '@mui/material';
 
 export default function AddCategory() {
   const url = 'https://sheetdb.io/api/v1/yzelvmaoczxfc'
@@ -35,16 +35,18 @@ export default function AddCategory() {
     }, 4000);
   }
   return (
-    <div className='flex justify-center py-5'>
-      <form onSubmit={handleSubmit} className='flex flex-col w-1/2 gap-5'>
-        <TextField variant="outlined" name="id" label='id' fullWidth disabled value={idCat} />
-        <TextField label="Name" variant="outlined" name="name" fullWidth type="number" />
-        <TextField label="Href" variant="outlined" name="href" fullWidth />
-        <ButtonGroup variant="contained" aria-label="Basic button group">
-          <Button variant="contained" fullWidth type="submit">Add</Button>
-          <Button variant="contained" fullWidth type="reset" color="error" >Clear</Button>
-        </ButtonGroup>
-      </form>
+    <div className='flex w-full justify-end py-5'>
+      <div className='w-5/6'>
+        <form onSubmit={handleSubmit} className='flex flex-col w-full gap-5'>
+          <TextField variant="outlined" name="id" label='id' fullWidth disabled value={idCat} />
+          <TextField label="Name" variant="outlined" name="name" fullWidth type="number" />
+          <TextField label="Href" variant="outlined" name="href" fullWidth />
+          <ButtonGroup variant="contained" aria-label="Basic button group">
+            <Button variant="contained" fullWidth type="submit">Add</Button>
+            <Button variant="contained" fullWidth type="reset" color="error" >Clear</Button>
+          </ButtonGroup>
+        </form>
+      </div>
     </div>
   );
 }
