@@ -14,7 +14,7 @@ import UpdateCategory from './CRUD/Update/Category'
 
 
 //AUTH
-import Login from './auth/login/LoginPage'
+import Login from './auth/LoginPage'
 import PrivateRoute from './auth/PrivateRoute'
 
 function App() {
@@ -24,7 +24,6 @@ function App() {
       <Routes>
         {/* Auth */}
         <Route path="/login" element={<Login />}></Route>
-
         {/* Home */}
         <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>}></Route>
         {/* LIST */}

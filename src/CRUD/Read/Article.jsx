@@ -1,23 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
-    Box,
-    Paper,
-    Avatar,
-    Typography,
-    Table as MuiTable,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Tooltip,
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
+    Box, Paper, Avatar, Typography, Table as MuiTable, TableBody, TableCell, TableContainer, TableHead,
+    TableRow, Tooltip, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -35,10 +20,11 @@ const Table = () => {
     const [articles, setArticles] = useState([]);
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedArticle, setSelectedArticle] = useState(null);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
     useEffect(() => {
         axios
-            .get("https://sheetdb.io/api/v1/znf87zwkiuisa")
+            .get("https://sheetdb.io/api/v1/xjzqyyqrbfymx")
             .then((res) => setArticles(res.data))
             .catch((err) => console.error(err));
     }, []);
@@ -55,22 +41,18 @@ const Table = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`https://sheetdb.io/api/v1/znf87zwkiuisa/id/${id}`);
-            setArticles(articles.filter(a => a.id !== id));
+            await axios.delete(`https://sheetdb.io/api/v1/xjzqyyqrbfymx/id/${id}`);
+            setArticles(articles.filter((a) => a.id !== id));
             setSelectedArticle(null);
-        }
-        catch (err) {
-            console.error(err)
+        } catch (err) {
+            console.error(err);
         }
         handleCloseDialog();
     };
 
     return (
         <>
-            <TableContainer
-                component={Paper}
-                sx={{ maxHeight: 700, width: "100%" }}
-            >
+            <TableContainer component={Paper} sx={{ maxHeight: 700, width: "98%", overflow: 'hidden' }} variant="outlined">
                 <MuiTable stickyHeader>
                     <TableHead>
                         <TableRow sx={{ backgroundColor: "#1976d2" }}>
@@ -85,10 +67,7 @@ const Table = () => {
                                 "Content",
                                 "Actions",
                             ].map((title) => (
-                                <TableCell
-                                    key={title}
-                                    sx={{ color: "black", fontWeight: "bold" }}
-                                >
+                                <TableCell key={title} sx={{ color: "black", fontWeight: "bold" }}>
                                     {title}
                                 </TableCell>
                             ))}
@@ -101,27 +80,53 @@ const Table = () => {
                                 sx={{
                                     backgroundColor: index % 2 === 0 ? "#fff" : "#fffde7",
                                     "&:hover": { backgroundColor: "#f1f1f1" },
-                                }}
-                            >
+                                }}>
                                 <TableCell>{article.idContent}</TableCell>
-                                <TableCell>{article.nameArticle}</TableCell>
-                                <TableCell>{article.description}</TableCell>
+                                <TableCell sx={{ maxWidth: 150 }}>
+                                    <Tooltip title={
+                                        <div style={{ maxHeight: 200, overflow: 'auto', whiteSpace: 'pre-wrap' }}>
+                                            {article.nameArticle}
+                                        </div>}>
+                                        <Typography noWrap>
+                                            {article.nameArticle}
+                                        </Typography>
+                                    </Tooltip>
+                                </TableCell>
+                                <TableCell sx={{ maxWidth: 150 }}>
+                                    <Tooltip title={
+                                        <div style={{ maxHeight: 200, overflow: 'auto', whiteSpace: 'pre-wrap' }}>
+                                            {article.description}
+                                        </div>}>
+                                        <Typography noWrap>
+                                            {article.description}
+                                        </Typography>
+                                    </Tooltip>
+                                </TableCell>
                                 <TableCell>
                                     <Box display="flex" justifyContent="center">
-                                        <Avatar
-                                            variant="rounded"
-                                            src={article.imgArticle || defaultImage}
-                                            alt="img"
-                                            sx={{ width: 60, height: 60 }}
-                                        />
+                                        <Avatar variant="rounded" src={article.imgArticle || defaultImage} alt="img" sx={{ width: 60, height: 60 }} />
                                     </Box>
                                 </TableCell>
-                                <TableCell>{article.hashtags}</TableCell>
+                                <TableCell sx={{ maxWidth: 150 }}>
+                                    <Tooltip title={
+                                        <div style={{ maxHeight: 200, overflow: 'auto', whiteSpace: 'pre-wrap' }}>
+                                            {article.hashtags}
+                                        </div>}>
+                                        <Typography noWrap>
+                                            {article.hashtags}
+                                        </Typography>
+                                    </Tooltip>
+                                </TableCell>
                                 <TableCell>{article.category}</TableCell>
                                 <TableCell>{formatAuthor(article.author)}</TableCell>
                                 <TableCell sx={{ maxWidth: 200 }}>
-                                    <Tooltip title={article.content || ""}>
-                                        <Typography noWrap>{article.content}</Typography>
+                                    <Tooltip title={
+                                        <div style={{ maxHeight: 200, overflow: 'auto', whiteSpace: 'pre-wrap' }}>
+                                            {article.content}
+                                        </div>}>
+                                        <Typography noWrap>
+                                            {article.content}
+                                        </Typography>
                                     </Tooltip>
                                 </TableCell>
                                 <TableCell>
@@ -129,11 +134,7 @@ const Table = () => {
                                         <Button variant="outlined" color="primary" onClick={() => navigate(`/article/${article.id}`)}>
                                             Update
                                         </Button>
-                                        <Button
-                                            variant="outlined"
-                                            color="error"
-                                            onClick={() => handleOpenDialog(article)}
-                                        >
+                                        <Button variant="outlined" color="error" onClick={() => handleOpenDialog(article)}>
                                             Delete
                                         </Button>
                                     </Box>
@@ -143,12 +144,13 @@ const Table = () => {
                     </TableBody>
                 </MuiTable>
             </TableContainer>
+
+            {/* Confirmation Dialog for Delete */}
             <Dialog open={openDialog} onClose={handleCloseDialog}>
                 <DialogTitle>Xác nhận xóa</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Bạn có chắc chắn muốn xóa bài viết:{" "}
-                        <strong>{selectedArticle?.nameArticle}</strong>?
+                        Bạn có chắc chắn muốn xóa bài viết: <strong>{selectedArticle?.nameArticle}</strong>?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -162,27 +164,24 @@ const Table = () => {
     );
 };
 
-const NameTable = ({ name, description }) => (
-    <Box sx={{ px: 2, pt: 2 }}>
-        <Typography variant="h5" fontWeight="bold">
-            {name}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-            {description}
-        </Typography>
-    </Box>
-);
+export const NameTable = () => {
+    const navigate = useNavigate()
+    return (
+        < Box sx={{ px: 2, py: 2, width: '100%' }}>
+            <Button variant="outlined" onClick={() => navigate('/add/article')}>+ Thêm Bài Báo</Button>
+        </Box >
+    )
+
+};
+
 export const TableArticle = () => (
-    <div className="w-full flex justify-end ">
-        <div className="w-5/6 flex justify-center">
-            <div className="w-full ">
-                <NameTable
-                    name="Article Table"
-                    description="Description for article table"
-                />
+    <div className="w-full flex justify-end">
+        <div className="w-5/6 flex justify-center not-lg:w-full">
+            <div className="w-full flex flex-col items-center">
+                <NameTable />
                 <Table />
             </div>
-        </div >
+        </div>
     </div>
 );
 

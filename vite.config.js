@@ -7,6 +7,13 @@ export default defineConfig({
     react(),
     tailwindcss()
   ],
+  define: {
+    global: 'window',
+  },
+  optimizeDeps: {
+    include: ['buffer', 'process'],
+  },
+
 }, {
   base: "/",
   plugins: [react()],

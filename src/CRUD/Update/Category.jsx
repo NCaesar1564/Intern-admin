@@ -14,7 +14,7 @@ export default function UpdateCategory() {
     }
   )
   useEffect(() => {
-    axios.get(`https://sheetdb.io/api/v1/5otjx4kyw1e1y/search?id=${id}`).then(data => setCategory(data.data[0])).catch(err => console.error(err))
+    axios.get(`https://sheetdb.io/api/v1/p0h7yppzewaue/search?id=${id}`).then(data => setCategory(data.data[0])).catch(err => console.error(err))
   }, [id])
 
   const handleInputChange = (e) => {
@@ -25,7 +25,7 @@ export default function UpdateCategory() {
     e.preventDefault();
     const dataToUpdate = { ...category };
     try {
-      await axios.put(`https://sheetdb.io/api/v1/5otjx4kyw1e1y/id/${id}`, dataToUpdate, {
+      await axios.put(`https://sheetdb.io/api/v1/p0h7yppzewaue/id/${id}`, dataToUpdate, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -39,9 +39,9 @@ export default function UpdateCategory() {
     <div className="w-full flex justify-end py-2">
       <div className='w-5/6 flex justify-center'>
         <form onSubmit={handleSubmit} className="flex flex-col justify-center w-full gap-6" >
-          <TextField label='Id' variant="outlined" name="id" fullWidth disabled onChange={handleInputChange} value={category.id} />
-          <TextField label="Name" variant="outlined" name="name" fullWidth onChange={handleInputChange} value={category.name} />
-          <TextField label="Href" variant="outlined" name="href" fullWidth onChange={handleInputChange} value={category.href} />
+          <TextField label='Id' variant="outlined" name="id" fullWidth disabled onChange={handleInputChange} value={category.id} required />
+          <TextField label="Name" variant="outlined" name="name" fullWidth onChange={handleInputChange} value={category.name} required />
+          <TextField label="Href" variant="outlined" name="href" fullWidth onChange={handleInputChange} value={category.href} required />
           <ButtonGroup variant="contained" aria-label="Basic button group">
             <Button variant="contained" fullWidth type="submit">Update</Button>
             <Button variant="contained" fullWidth color="error" onClick={() => navigate('/category')}>Quay về</Button>

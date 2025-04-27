@@ -8,8 +8,8 @@ export default function Home() {
   }
   return (
     <>
-      <div className='w-full flex justify-end min-h-screen'>
-        <div className='w-5/6 py-2'>
+      <div className='w-full flex justify-end min-h-96'>
+        <div className='w-5/6 not-lg:w-full'>
           <ListCard />
         </div>
       </div>

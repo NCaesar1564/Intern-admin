@@ -1,11 +1,12 @@
 import React from 'react'
+import { Button } from '@mui/material';
 
 
 export const Name = () => {
     return (
         <div className='w-full h-16 flex flex-col justify-start items-center mb-10'>
             <div className='w-5/6 h-16 text-center'>
-                <div className='h-full flex items-center justify-center'><p className='text-3xl font-mono text-gray-400 '>ZNews</p></div>
+                <a className='h-full flex items-center justify-center' href='/'><p className='text-3xl font-mono text-gray-400'>ZNews</p></a>
                 <hr className='text-gray-300' />
             </div>
         </div>
@@ -27,13 +28,27 @@ export const Card = () => {
         </>
     )
 }
+export const LogoutButton = () => {
+    const handleLogout = () => {
+        localStorage.removeItem('isLoggedIn')
+        window.location.reload(true)
+    }
+    return (
+        <>
+            <Button variant='outlined' onClick={handleLogout} sx={{ width: '80%' }}>Đăng Xuất</Button>
+        </>
+    )
+}
 export default function Sidebar() {
     return (
         <>
-            <div className='w-full min-h-screen z-50 bg-white'>
+            <div className='w-1/6 h-screen bg-white fixed shadow'>
                 <Name />
-                <div className='w-full flex flex-col justify-center items-center  z-50'>
+                <div className='w-full flex flex-col justify-center items-center '>
                     <Card />
+                </div>
+                <div className='absolute bottom-4 left-1/10 w-full'>
+                    <LogoutButton />
                 </div>
             </div>
         </>

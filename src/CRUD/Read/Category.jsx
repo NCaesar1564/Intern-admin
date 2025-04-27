@@ -31,7 +31,7 @@ const Table = () => {
   const navigate = useNavigate()
   useEffect(() => {
     axios
-      .get("https://sheetdb.io/api/v1/5otjx4kyw1e1y")
+      .get("https://sheetdb.io/api/v1/p0h7yppzewaue")
       .then((res) => setCategories(res.data))
       .catch((err) => console.error(err));
   }, []);
@@ -48,7 +48,7 @@ const Table = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://sheetdb.io/api/v1/znf87zwkiuisa/id/${id}`);
+      await axios.delete(`https://sheetdb.io/api/v1/p0h7yppzewaue/id/${id}`);
       setCategories(categories.filter(a => a.id !== id));
       setSelectedCategory(null);
     }
